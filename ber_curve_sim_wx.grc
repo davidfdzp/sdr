@@ -1,0 +1,294 @@
+options:
+  parameters:
+    author: Example
+    category: Custom
+    cmake_opt: ''
+    comment: ''
+    copyright: https://wiki.gnuradio.org/index.php/TutorialsSimulations
+    description: Adjust EbNo and check the BER
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: ber_sim
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: BER Simulation
+    window_size: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: constellation
+  id: variable
+  parameters:
+    comment: ''
+    value: (digital.constellation_bpsk(), digital.constellation_qpsk(), digital.constellation_8psk())
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [208, 37]
+    rotation: 0
+    state: enabled
+- name: constellation_type
+  id: variable
+  parameters:
+    comment: ''
+    value: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [376, 37]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '100000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 160]
+    rotation: 0
+    state: enabled
+- name: EbNo
+  id: variable_slider
+  parameters:
+    alias: ''
+    comment: ''
+    converver: float_converter
+    grid_pos: ''
+    label: Energy Bit / Noise Power (dB)
+    max: '100'
+    min: '-100'
+    notebook: ''
+    num_steps: '200'
+    style: wx.SL_HORIZONTAL
+    value: '10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [400, 393]
+    rotation: 0
+    state: enabled
+- name: analog_noise_source_x_0
+  id: analog_noise_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: 1.0/math.sqrt(2.0*constellation[constellation_type].bits_per_symbol()*10**(EbNo/10))
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    noise_type: analog.GR_GAUSSIAN
+    seed: '42'
+    type: complex
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 342]
+    rotation: 0
+    state: enabled
+- name: blks2_error_rate_0
+  id: blks2_error_rate
+  parameters:
+    affinity: ''
+    alias: ''
+    bits_per_symbol: constellation[constellation_type].bits_per_symbol()
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: '''BER'''
+    win_size: '10000000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [808, 134]
+    rotation: 0
+    state: enabled
+- name: blocks_add_xx_0
+  id: blocks_add_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [619, 333]
+    rotation: 0
+    state: enabled
+- name: blocks_throttle_0
+  id: blocks_throttle
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    ignoretag: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: samp_rate
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [160, 140]
+    rotation: 0
+    state: enabled
+- name: blocks_vector_sink_x_0
+  id: blocks_vector_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    reserve_items: '1024'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [908, 293]
+    rotation: 0
+    state: enabled
+- name: blocks_vector_source_x_0
+  id: blocks_vector_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    repeat: 'True'
+    tags: '[]'
+    type: byte
+    vector: (0, 0, 0)
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 238]
+    rotation: 0
+    state: enabled
+- name: digital_chunks_to_symbols_xx_0
+  id: digital_chunks_to_symbols_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    dimension: '1'
+    in_type: byte
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_ports: '1'
+    out_type: complex
+    symbol_table: constellation[constellation_type].points()
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [346, 215]
+    rotation: 0
+    state: enabled
+- name: digital_constellation_decoder_cb_0
+  id: digital_constellation_decoder_cb
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    constellation: constellation[constellation_type].base()
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [695, 150]
+    rotation: 0
+    state: enabled
+- name: import
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import math
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [520, 44]
+    rotation: 0
+    state: enabled
+- name: wxgui_numbersink2_0
+  id: wxgui_numbersink2
+  parameters:
+    affinity: ''
+    alias: ''
+    average: 'False'
+    avg_alpha: '0'
+    comment: ''
+    decimal_places: '4'
+    factor: '100'
+    grid_pos: 1,0,1,1
+    max_value: '1'
+    min_value: '0'
+    notebook: ''
+    number_rate: '15'
+    peak_hold: 'False'
+    ref_level: '0'
+    samp_rate: samp_rate
+    show_gauge: 'False'
+    title: BER
+    type: float
+    units: '%'
+    win_size: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [984, 77]
+    rotation: 0
+    state: enabled
+
+connections:
+- [analog_noise_source_x_0, '0', blocks_add_xx_0, '1']
+- [blks2_error_rate_0, '0', wxgui_numbersink2_0, '0']
+- [blocks_add_xx_0, '0', blocks_vector_sink_x_0, '0']
+- [blocks_add_xx_0, '0', digital_constellation_decoder_cb_0, '0']
+- [blocks_throttle_0, '0', blks2_error_rate_0, '0']
+- [blocks_throttle_0, '0', digital_chunks_to_symbols_xx_0, '0']
+- [blocks_vector_source_x_0, '0', blocks_throttle_0, '0']
+- [digital_chunks_to_symbols_xx_0, '0', blocks_add_xx_0, '0']
+- [digital_constellation_decoder_cb_0, '0', blks2_error_rate_0, '1']
+
+metadata:
+  file_format: 1
