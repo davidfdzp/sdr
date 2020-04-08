@@ -139,7 +139,7 @@ blocks:
     options: '[0, 1, 2]'
     orient: Qt.QVBoxLayout
     type: int
-    value: '1'
+    value: '0'
     widget: combo_box
   states:
     bus_sink: false
@@ -302,7 +302,7 @@ blocks:
     ignoretag: 'True'
     maxoutbuf: '0'
     minoutbuf: '0'
-    samples_per_second: samp_rate
+    samples_per_second: samp_rate/sps
     type: float
     vlen: '1'
   states:
@@ -344,7 +344,7 @@ blocks:
     invert: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
-    polar: '1'
+    polar: polar
   states:
     bus_sink: false
     bus_source: false
@@ -498,7 +498,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1407, 143]
+    coordinate: [1407, 187]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_0

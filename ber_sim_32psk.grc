@@ -295,7 +295,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1030, 67]
+    coordinate: [1049, 78]
     rotation: 0
     state: true
 - name: import
